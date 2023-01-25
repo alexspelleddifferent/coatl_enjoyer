@@ -168,11 +168,13 @@ def drawer(decklist):
 
 def logger(input):
     log_file=open("scanning_log.txt", "a")
+    if input != []:
+        input='ndf'
     match input:
         case []:
             log_file.write(f"No new events at {time.ctime()}\n")
-        case 'hi':
-            log_file.write(f"No new events at {time.ctime()}\n")
+        case 'ndf':
+            log_file.write(f"New decks found at {time.ctime()}!\n")
         case _:
             return
     log_file.close()
