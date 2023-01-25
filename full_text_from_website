@@ -1,8 +1,0 @@
-import requests
-
-reps=requests.get('https://www.mtgo.com/en/mtgo/decklist/modern-league-2022-12-20')
-
-file1=open("raw.txt", "w", encoding="utf-8")
-print(reps.text)
-file1.write(reps.text)
-file1.close()

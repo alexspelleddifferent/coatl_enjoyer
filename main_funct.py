@@ -24,7 +24,6 @@ def event_comparer(event_list_new):
     historic_lists.close()
 
     last_events=last_events.replace('"','" ').split()
-
     new_events=list(set(event_list_new)-set(last_events))
 
     event_saver(event_list_new)
@@ -53,6 +52,7 @@ def decks_grabber(event):
 # grabs an event from the website and checks if it is a modern or legacy event. 
 # if it is, it grabs the decks from the event and returns them and the name of the event     
     decks_list={}
+    event_name="Not relevant"
     if "modern" in event or "legacy" in event:
         url='https://www.mtgo.com'+event[:-1]
         resp=requests.get(url)
@@ -60,7 +60,6 @@ def decks_grabber(event):
         decks="{"+resp.text[resp.text.find('"decks":'):(resp.text.find('window.MTGO.decklists.roundNames')-6)]
         finishes_dict=json.loads(decks)
         decks_list=finishes_dict['decks']
-    print(decks_list)
     return decks_list, event_name
 
 def deck_constructor(deck, event_name):
@@ -165,7 +164,7 @@ def drawer(decklist):
             # print(deck['Sideboard'][card][1], card)
             deck_image.text((600,70+20*row_count), current_card, font=small_font, fill=(0, 0, 0))
             row_count+=1
-        deck_background.save(f'C:\python projects\coatl_enjoyer\deck_images/{deck_name}.png')
+        deck_background.save(f'deck_images/{deck_name}.png')
 
 def logger(input):
     log_file=open("scanning_log.txt", "a")
@@ -185,9 +184,7 @@ while True:
     start=time.perf_counter()
     card_of_interest="Ice-Fang Coatl"
     event_list=event_finder()
-    print(event_list)
     new_events=event_comparer(event_list)
-    print(new_events)
     desired_decks=event_parser(new_events, card_of_interest)
     organized_decks=deck_transformer(desired_decks)
     drawer(organized_decks)
