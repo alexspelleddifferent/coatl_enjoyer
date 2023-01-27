@@ -2,6 +2,7 @@ import requests
 import json
 import re
 import time
+import publisher
 from PIL import Image, ImageDraw, ImageFont
 
 def event_finder():
